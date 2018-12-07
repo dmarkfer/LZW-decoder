@@ -1,25 +1,50 @@
+from LZWDecoder import LZWDecoder
 
-kP = input("Unesite kodiranu poruku (simbole odvojite razmakom): \n")
-kP = kP.split(' ')
 
-n = int(input("\nUnesite broj simbola u rjecniku: "))
+try:
+    # kP - kodirana poruka
+    kP = list(filter(lambda s: s != '', input("Unesite kodiranu poruku (simbole odvojite razmakom): \n").split(' ') ))
+except:
+    print('Doslo je do pogreske prilikom unosa kodirane poruke!')
+    exit(1)
+
+
+try:
+    # n - pocetni broj simbola u rjecniku
+    n = int(input("\nUnesite broj simbola u rjecniku: "))
+except:
+    print('Doslo je do pogreske prilikom unosa pocetnog broja simbola u rjecniku! Potrebno je unijeti prirodni broj.')
+    exit(2)
+
 
 print("\nUnesite simbole rjecnika: ")
-D = {}
-for i in range(n):
-    D[str(i)] = input('D[{}] = '.format(i))
 
-for i in range(len(kP)):
-    if kP[i] in D:
-        print(D[kP[i]], end=' ')
+try:
+    # D - rjecnik (dictionary)
+    D = {}
+    # pocetni indeks simbola rjecnika (zadano u zadatku kao 0 (nula) )
+    pocetniIndeks = 0
 
-        if i > 0:
-            temp = D[kP[i-1]] + D[kP[i]][0]
-            if temp not in D.values():
-                D[str(n)] = temp
-                n += 1
-    else:
-        temp = D[kP[i-1]] + D[kP[i-1]][0]
-        D[str(n)] = temp
-        print(D[str(n)], end=' ')
-        n += 1
+    for i in range(pocetniIndeks, n+pocetniIndeks):
+        # unos podataka u formatu "D[0] = a" etc.
+        D[str(i)] = input('D[{}] = '.format(i))
+except:
+    print('Doslo je do pogreske prilikom unosa simbola rjecnika!')
+    exit(3)
+
+
+try:
+    # instanciranje LZW decodera
+    decoder = LZWDecoder(n, D, pocetniIndeks)
+except:
+    print('Doslo je do pogreske prilikom instanciranja objekta LZWDecoder s parametrima: \nn = {}\nD = {}\npocetniIndex = {}\n'.format(n, D, pocetniIndeks))
+    exit(4)
+
+try:
+    #ispis dekodirane poruke
+    print("\nDekodirana poruka glasi: \n" + decoder.decode(kP))
+except:
+    print('Doslo je do pogreske prilikom dekodiranja kodirane poruke!')
+    exit(5)
+
+print('\n')
