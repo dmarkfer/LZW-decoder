@@ -1,16 +1,39 @@
+"""Modul sadržava razred za dekodiranje korištenjem LZW algoritma.
+
+"""
 
 class LZWDecoder:
-    # konstruktor LZW dekodera
+    """Razred pruža metodu za dekodiranje poruke LZW algoritmom.
+    
+    """
+    
     def __init__(self, n, D, startingIndex):
-        # n - broj simbola u rjecniku
+        """Konstruktor LZWDecoder razreda.
+
+        :param n: broj simbola u rjecniku
+        :type n: int
+        :param D: rjecnik (dictionary)
+        :type D: rjecnik u formatu  D[0] = 'a' 
+        :param startingIndex: pocetni indeks rjecnika
+        :type startingIndex: int
+
+        """
+        
         self.n = n
-        # D - rjecnik
         self.D = D
-        # pocetni index rjecnika
         self.startingIndex = startingIndex
 
-    # metoda za dekodiranje kodirane poruke kP koja se predaje kao parametar metode
+    
     def decode(self, kP):
+        """Metoda za dekodiranje kodirane poruke kP koja se predaje kao parametar metode
+
+        :param kP: kodirana poruka
+        :type kP: lista simbola
+        :returns: dekodirana poruka
+        :rtype: str
+
+        """
+
         # dekodirana poruka
         dP = ''
 
